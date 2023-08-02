@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../states/index.js";
 import './login.css';
+import Navbar from "../navbar/index.jsx";
 
 function Login() {
 	const [isRightPanelActive, setIsRightPanelActive] = useState(false);
@@ -69,6 +70,7 @@ function Login() {
 				  token: data.token,
 				})
 			  );
+			  console.log(data.user)
 			  navigate("/home");
 			  console.log("User logged in successfully");
 	  
@@ -102,7 +104,8 @@ function Login() {
 
   return (
     <>
-	<Box
+	<Navbar height={10}></Navbar>
+	{/* <Box
         width="100%"
         backgroundColor="#222"
         p="1rem 6%"
@@ -125,7 +128,7 @@ function Login() {
  
 		</div>
         
-      </Box>
+      </Box> */}
 	<Box sx={{ mx: 'auto', width: '758px', mt:5 }}>
      
   

@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Student from "../models/Student.js";
+import Trainer from "../models/Trainer.js";
 
 // register Student
 export const registerStudent = async (req,res) => {
@@ -33,17 +34,50 @@ export const registerStudent = async (req,res) => {
     }
 };
 
+
+
+
+export const registerTrainer = async (req,res) => {
+    try{
+        const { 
+            firstName,
+            lastName,
+            email,
+            password,
+            picturePath,
+            weight=0,
+            height="",
+         } = req.body;
+        const salt = await bcrypt.genSalt();
+        const passwordHash = await bcrypt.hash(password , salt);
+        const newTrainer = new Trainer({
+            firstName,
+            lastName,
+            email,
+            password:passwordHash,
+            picturePath,
+            weight,
+            height,
+            trainers:[]
+        });
+       const savedTrainer =  await newTrainer.save();
+       res.status(201).json(savedTrainer);
+    } catch(err){
+        res.status(500).json({error:err.message});
+    }
+};
+
+
 export const login = async (req,res) => {
-    console.log("login api hit")
     try{
         const {email , password} = req.body;
-        const student = await Student.findOne({email:email})
-        if(!student) return res.status(400).json({msg:"Student does not exist"});
-        const isMatch = await bcrypt.compare(password , student.password);
+        const user = await Student.findOne({email:email})
+        if(!user) return res.status(400).json({msg:"User does not exist"});
+        const isMatch = await bcrypt.compare(password , user.password);
         if(!isMatch) return res.status(400).json({msg:"Invalid credentials"});
-        const token = jwt.sign({id:student._id} , process.env.JWT_SECRET);
-        delete student.password;
-        res.status(200).json({token , student});
+        const token = jwt.sign({id:user._id} , process.env.JWT_SECRET);
+        delete user.password;
+        res.status(200).json({token , user});
     } catch(err){
         res.status(500).json({error:err.message});
     }

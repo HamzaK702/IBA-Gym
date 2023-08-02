@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   token: null,
+  admin: false,
   trainer: false,
   posts: [],
   users:[],
@@ -17,14 +18,19 @@ export const authSlice = createSlice({
       state.mode = state.mode === "light" ? "dark" : "light";
     },
     setLogin: (state, action) => {
-      console.log("setlogin")
+      
       state.user = action.payload.user;
       state.token = action.payload.token;
+      if(state.user.email==="admin@gmail.com"){
+        state.admin = true
+    }
+    console.log("state admin is" + state.admin)
     },
     setLogout: (state) => {
       state.user = null;
       state.token = null;
       state.trainer = false;
+      state.admin = false;
     },
     setFriends: (state, action) => {
       if (state.user) {

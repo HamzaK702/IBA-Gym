@@ -35,7 +35,7 @@ const TrainerSchema = new mongoose.Schema({
     time:{
         type:String,
          
-    }
+    },
     height:{
         type:String,
           
@@ -46,5 +46,5 @@ const TrainerSchema = new mongoose.Schema({
     },
 },{timestamps:true});
 
-const TrainerSchema = mongoose.model("Trainer" , TrainerSchema);
+const Trainer  = mongoose.model("Trainer" , TrainerSchema);
 export default Trainer;
