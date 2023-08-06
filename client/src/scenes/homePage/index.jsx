@@ -27,7 +27,10 @@ const HomePage = () => {
     p: 4,
   };
   const [open, setOpen] = useState(false);
+  const [openName, setOpenName] = useState(false);
   const handleOpen = () => setOpen(true);
+  const handleOpenname = () => setOpenName(true);
+  const handleCloseName = () => setOpenName(false);
   const handleClose = () => setOpen(false);
   const [image, setImage] = useState("");
 const user = useSelector((state) => state.user);
@@ -57,8 +60,8 @@ function UploadImage(){
         <Box onClick={handleOpen}>
         <UserImage  image={picturePath} size="100px"></UserImage> 
         </Box>
-        {/* Fazoo kaam in coming */}
-        {/* <Button onClick={handleOpen}>Open modal</Button> */}
+        
+        
       <Modal
         keepMounted
         open={open}
@@ -105,7 +108,7 @@ function UploadImage(){
         
         <Typography    sx={{mt:"35px", ml:'20px',  fontSize: 26, fontWeight: 'Bold'}}>{fullName}</Typography> 
         
-        <EditIcon onClick={handleEditname}
+        <EditIcon onClick={handleOpenname}
         sx={{
           mt: "42px",
           ml: '10px',
@@ -115,6 +118,19 @@ function UploadImage(){
           }
         }}
       />
+      <Modal
+        keepMounted
+        open={openName}
+        onClose={handleCloseName}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
+            Edit Name
+          </Typography>
+          </Box>
+          </Modal>
       
         </Box>
         <h1>more data comes here</h1>
